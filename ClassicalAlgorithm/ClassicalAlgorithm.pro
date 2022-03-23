@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    BFS
+    BFS \
+    Mul2BigNumbers
