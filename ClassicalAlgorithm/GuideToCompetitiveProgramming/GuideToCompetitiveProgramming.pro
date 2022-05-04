@@ -6,5 +6,6 @@ SUBDIRS += \
     CountingSort \
     GeneratingSubsets \
     GenerationgPermutations \
+    LongestIncreasingSubsequence \
     Queens \
     WeirdAlgorithm
