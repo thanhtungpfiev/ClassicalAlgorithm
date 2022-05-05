@@ -1,5 +1,12 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    GuideToCompetitiveProgramming \
-    MySummary
+    BFS \
+    BruteForce \
+    DFS \
+    DynamicProgramming \
+    Grapth \
+    Heap \
+    Searching \
+    Sorting \
+    Tree

@@ -1,11 +1,8 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    BubbleSort \
-    CoinChange \
-    CountingSort \
     GeneratingSubsets \
     GenerationgPermutations \
-    LongestIncreasingSubsequence \
+    Mul2BigNumbers \
     Queens \
     WeirdAlgorithm
