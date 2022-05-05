@@ -2,5 +2,10 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     CoinChange \
+    CoinChange2 \
+    CountingTillings \
     FindMaximumContinuosSubArray \
-    LongestIncreasingSubsequence
+    FromPermutationstoSubsets \
+    LongestIncreasingSubsequence \
+    PathsInAGrid \
+    knapsack
