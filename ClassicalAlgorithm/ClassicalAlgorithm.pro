@@ -7,6 +7,7 @@ SUBDIRS += \
     DynamicProgramming \
     Grapth \
     Heap \
+    Recursive \
     Searching \
     Sorting \
     Tree
