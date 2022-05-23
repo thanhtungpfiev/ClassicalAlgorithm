@@ -13,6 +13,7 @@ SUBDIRS += \
     KNAPSACK_1/KNAPSACK.pro \
     LIS \
     LongestIncreasingSubsequence \
+    OnesAndZeroes \
     PathsInAGrid \
     analyseN \
     knapsack
