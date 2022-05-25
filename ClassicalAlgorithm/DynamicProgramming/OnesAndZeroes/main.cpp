@@ -40,7 +40,7 @@ public:
     }
 
     int findMaxForm(vector<string>& strs, int m, int n) {
-        vector<vector<vector<int> > > dp (strs.size(),vector<vector<int> >(m + 1,vector <int>(n + 1, -1)));
+        vector<vector<vector<int>>> dp (strs.size(), vector<vector<int>>(m + 1, vector <int>(n + 1, -1)));
         return solve(0, 0, 0, strs, m, n, dp);
     }
 };
