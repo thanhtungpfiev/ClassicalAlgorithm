@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    GreatestCommonDivisor
+    CheckArrayIsSorted \
+    GreatestCommonDivisor \
+    TowersOfHanoi
