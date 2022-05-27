@@ -15,5 +15,6 @@ SUBDIRS += \
     LongestIncreasingSubsequence \
     OnesAndZeroes \
     PathsInAGrid \
+    RussianDollEnvelopes \
     analyseN \
     knapsack

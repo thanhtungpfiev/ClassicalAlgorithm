@@ -32,6 +32,6 @@ void TowersOfHanoi(int n, char frompeg, char topeg, char auxpeg)
 
 int main()
 {
-    TowersOfHanoi(3, 'A', 'B', 'C');
+    TowersOfHanoi(2, 'A', 'B', 'C');
     return 0;
 }

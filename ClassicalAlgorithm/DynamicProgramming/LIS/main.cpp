@@ -49,18 +49,42 @@ int trace(const vector<int>& A, const vector<int>& T)
     return result;
 }
 
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> lis;
+        for (int i = 0; i < nums.size(); ++i) {
+            int curr = nums[i];
+            auto it = lower_bound(lis.begin(), lis.end(), curr);
+            if (it == lis.end()) {
+                lis.push_back(curr);
+            } else {
+                *it = curr;
+            }
+        }
+        for (const auto &e : lis) {
+            cout << e << " ";
+        }
+        return lis.size();
+    }
+};
+
 int main()
 {
-    int N;
-    cin >> N;
-    vector<int> A(N);
-    for (int i = 0; i < N; ++i) {
-        cin >> A[i];
-    }
-    A.insert(A.begin(), INT_MIN);
-    A.push_back(INT_MAX);
-    vector<int> L(A.size());
-    vector<int> T(A.size() - 1);
-    build(A, L, T);
-    cout << trace(A, T) << endl;
+//    int N;
+//    cin >> N;
+//    vector<int> A(N);
+//    for (int i = 0; i < N; ++i) {
+//        cin >> A[i];
+//    }
+//    A.insert(A.begin(), INT_MIN);
+//    A.push_back(INT_MAX);
+//    vector<int> L(A.size());
+//    vector<int> T(A.size() - 1);
+//    build(A, L, T);
+//    cout << trace(A, T) << endl;
+
+    vector<int> v = {10,9,2,5,3,7,101,18};
+    Solution sl;
+    cout << sl.lengthOfLIS(v) << endl;
 }
