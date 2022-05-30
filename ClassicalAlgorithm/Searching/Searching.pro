@@ -1,4 +1,10 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    ClassicalSearching
+    BinarySearch \
+    ClassicalSearching \
+    FindMaxAppearingElementInAnArray \
+    LinearSearchSortedInput \
+    LinearSearchUnsortedInput \
+    MajorityElementInAnArray \
+    PrintDuplicatesInArray

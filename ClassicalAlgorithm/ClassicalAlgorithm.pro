@@ -2,6 +2,7 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     BFS \
+    BitManipulation \
     BruteForce \
     DFS \
     DynamicProgramming \
