@@ -7,6 +7,7 @@ SUBDIRS += \
     DFS \
     DynamicProgramming \
     Grapth \
+    HashTable \
     Heap \
     Lists_Stacks_Queues \
     Recursive \
