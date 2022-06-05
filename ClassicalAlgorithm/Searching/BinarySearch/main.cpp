@@ -8,7 +8,7 @@
  *
  * brief
  *
-***********************************************************************/
+ ***********************************************************************/
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -22,13 +22,19 @@ bool binarySearch(vector<int> &data, int value)
     int high = size - 1;
     int mid;
 
-    while (low <= high) {
+    while (low <= high)
+    {
         mid = low + (high - low) / 2;
-        if (data[mid] == value) {
+        if (data[mid] == value)
+        {
             return true;
-        } else if (data[mid] < value) {
+        }
+        else if (data[mid] < value)
+        {
             low = mid + 1;
-        } else {
+        }
+        else
+        {
             high = mid - 1;
         }
     }
@@ -38,18 +44,33 @@ bool binarySearch(vector<int> &data, int value)
 
 bool binarySearchRecursive(vector<int> &data, int low, int high, int value)
 {
-    if (low > high) {
+    if (low > high)
+    {
         return false;
     }
     int mid = low + (high - low) / 2;
-    if (data[mid] == value) {
+    if (data[mid] == value)
+    {
         return true;
-    } else if (data[mid] < value) {
-        return binarySearchRecursive(data, mid + 1, high, value);
-    } else {
-        return binarySearchRecursive(data, low, mid - 1, value);
-
     }
+    else if (data[mid] < value)
+    {
+        return binarySearchRecursive(data, mid + 1, high, value);
+    }
+    else
+    {
+        return binarySearchRecursive(data, low, mid - 1, value);
+    }
+}
+
+int findIndex(vector<int> &data, int value)
+{
+    auto it = lower_bound(data.begin(), data.end(), value);
+    if (it != data.end() && *it == value)
+    {
+        return it - data.begin();
+    }
+    return -1;
 }
 
 int main()
