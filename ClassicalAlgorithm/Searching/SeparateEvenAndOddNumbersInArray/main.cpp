@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -30,8 +31,8 @@ void seperateEvenAndOdd(std::vector<int> &data)
             right--;
         }
     }
-    sort(data, data + left);
-    sort(data + left, data + n);
+    sort(data.begin(), data.begin() + left);
+    sort(data.begin() + left, data.end());
 }
 
 int main(int argc, char **argv)
