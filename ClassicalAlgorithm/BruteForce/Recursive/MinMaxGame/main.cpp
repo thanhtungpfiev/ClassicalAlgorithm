@@ -41,7 +41,7 @@ public:
 int main(int argc, char **argv)
 {
     Solution sl;
-    vector<int> nums = {1,3,5,2,4,8,2,2};
+    vector<int> nums = {1, 3, 5, 2, 4, 8, 2, 2};
     cout << sl.minMaxGame(nums) << endl;
     vector<int> nums2 = {3};
     cout << sl.minMaxGame(nums2) << endl;
