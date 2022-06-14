@@ -31,8 +31,8 @@ void k_string(int n, int k, vector<int>& v)
 
 int main()
 {
-    int n = 3, k = 2;
-    cin >> n >> k;
+    int n = 5, k = 3;
+    // cin >> n >> k;
     vector<int> v;
     for (int i = 0; i < n; ++i) {
         v.push_back(i);
