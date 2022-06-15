@@ -6,10 +6,10 @@ SUBDIRS += \
     BruteForce \
     DFS \
     DynamicProgramming \
-    Grapth \
+    Graph \
     HashTable \
     Heap \
-    Lists_Stacks_Queues \
+    Stacks \
     Recursive \
     Searching \
     Sorting \

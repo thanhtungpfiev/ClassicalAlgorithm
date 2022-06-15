@@ -7,12 +7,14 @@
  */
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 void minabsSumPair2(std::vector<int> &data)
 {
-    sort(data.begin(), data.end();) int minSum, sum, minFirst, minSecond;
+    sort(data.begin(), data.end());
+    int minSum, sum, minFirst, minSecond;
     int l = 0;
     int r = data.size() - 1;
     minFirst = l;

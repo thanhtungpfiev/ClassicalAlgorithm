@@ -8,25 +8,41 @@
  *
  * brief
  *
-***********************************************************************/
+ ***********************************************************************/
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-int main()
+class Solution
 {
-    int n = 5;
-    vector<int> coins = {1, 3, 4};
-    vector<int> count(n + 1);
-    count[0] = 1;
-    for (int x = 1; x <= n; x++) {
-        for (auto c : coins) {
-            if (x-c >= 0) {
-                count[x] += count[x-c];
+public:
+    int change(int amount, vector<int> &coins)
+    {
+        vector<int> table(amount + 1);
+        table[0] = 1;
+        for (int i = 0; i < coins.size(); ++i)
+        {
+            for (int j = coins[i]; j <= amount; ++j)
+            {
+                table[j] += table[j - coins[i]];
             }
         }
+        return table[amount];
     }
-    cout << count[n] << endl;
+};
+
+int main()
+{
+    Solution sl;
+    int amount = 5;
+    vector<int> coins = {1, 2, 5};
+    cout << sl.change(amount, coins) << endl;
+    amount = 3;
+    coins = {2};
+    cout << sl.change(amount, coins) << endl;
+    amount = 10;
+    coins = {10};
+    cout << sl.change(amount, coins) << endl;
     return 0;
 }

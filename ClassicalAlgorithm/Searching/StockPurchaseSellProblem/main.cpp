@@ -6,6 +6,9 @@
  * -----
  */
 #include <iostream>
+#include <vector>
+
+using namespace std;
 
 void maxProfit(std::vector<int> &stocks)
 {
