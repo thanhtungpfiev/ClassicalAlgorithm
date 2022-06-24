@@ -1,0 +1,9 @@
+In a depth-first search, we traverse down a path until we get a dead end; then
+we backtrack by popping a stack to get an alternative path.
+· Create a stack
+· Create a start point
+· Push the start point onto the stack
+· While (value searching not found and the stack is not empty)
+o Pop the stack
+o Find all possible points after the one which we just tried
+o Push these points onto the stack

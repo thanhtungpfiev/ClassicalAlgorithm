@@ -1,0 +1,6 @@
+Find if given string is a palindrome or not using a stack.
+Definition of palindrome: A palindrome is a sequence of characters that is same
+backward or forward.
+Eg. “AAABBBCCCBBBAAA”, “ABA” & “ABBA”
+Hint: Push characters to the stack until the half-length of the string. Then popthese characters and then compare. Make sure you take care of the odd length
+and even length.

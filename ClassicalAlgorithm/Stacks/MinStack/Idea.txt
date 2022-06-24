@@ -1,0 +1,9 @@
+Hint: Keep two stack one will be general stack, which will just keep the
+elements. The second will keep the min value.
+1. Push: Push an element to the top of stack1. Compare the new value with
+the value at the top of the stack2. If the new value is smaller, then push the
+new value into stack2. Or push the value at the top of the stack2 to itself
+once more.
+2. Pop: Pop an element from top of stack1 and return. Pop an element from
+top of stack2 too.
+3. Min: Read from the top of the stack2 this value will be the min.

@@ -1,0 +1,6 @@
+https://leetcode.com/problems/course-schedule-iii/solution/
+1. Chứng minh việc sắp xếp các khóa học theo thứ tự tăng dần của deadline là hiệu quả.
+2. Kiểm tra xem khóa học đang xét liệu có thể lấy hay không (totalTime + its duration <= its dealine)
+2.1. Thỏa mãn -> Nhận khóa học này
+2.2. Nếu không thỏa mãn thì kiểm tra liệu có thể thay thế khóa học này bằng 1 khóa học khác đã từng nhận hay không. Điều kiện thay thế là khóa học đang xét có duration nhỏ hơn khóa học cần thay thế. Và để hiệu quả nhất thì ta sẽ thay thế khóa học có duration lớn nhất. Khi đó ta có nhiều cơ hội để lấy thêm được nhiều khóa học khác hơn
+-> Sử dụng priority queue cho trường hợp này

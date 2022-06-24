@@ -1,0 +1,5 @@
+1. Reverse the given infix expression.
+2. Replace '(' with ')' and ')' with '(' in the reversed expression.
+3. Now apply infix to postfix subroutine that we had already discussed.
+4. Reverse the generated postfix expression and this will give required prefix
+expression.

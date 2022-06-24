@@ -1,0 +1,6 @@
+Given a stack how to reverse the elements of the stack without using any other
+data-structure. You cannot use another stack too.
+Hint: Use recursion (system stack.) When you go inside the stack pop elements
+from stack in each subsequent call until stack is empty. Then push these
+elements one by one when coming out of the recursion. The elements will be
+reversed.

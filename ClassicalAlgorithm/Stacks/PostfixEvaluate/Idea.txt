@@ -1,0 +1,7 @@
+1) Create a stack to store values or operands.
+2) Scan through the given expression and do following for each element:
+a) If the element is a number, then push it into the stack.
+b) If the element is an operator, then pop values from the stack. Evaluate
+the operator over the values and push the result into the stack.
+3) When the expression is scanned completely, the number in the stack is the
+result.

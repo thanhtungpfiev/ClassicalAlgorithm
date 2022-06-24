@@ -1,0 +1,2 @@
+Với trường hợp tìm phần tử thứ K nhỏ nhất, ta sử dụng max heap với tư tưởng duy trì K phần tử nhỏ nhất với phần tử lớn nhất ở trên đỉnh (đẩy dần các phần tử lớn ra khỏi heap bằng cách so sánh phần tử đang xet với top của heap, nếu nhỏ hơn thì đẩy vào heap và lấy phần tử top của heap ra)
+Tương tự với trường hợp tìm phần tử thứ K lớn nhất, sử dụng min heap và đẩy phần tử lớn hơn top vào heap

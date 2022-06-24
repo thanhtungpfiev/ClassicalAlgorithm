@@ -1,0 +1,2 @@
+Sử dụng set để loại bỏ phần tử thừa
+Sau đó dùng set để loại bỏ các từ là hậu tố của các từ khác (xóa xâu con bắt đầu từ vị trí 1 đến cuối)

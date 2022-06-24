@@ -1,0 +1,8 @@
+1. Vét cạn
+Duyệt từ ngày hôm nay trở về trước, nếu gặp ngày có giá lớn hơn thì break
+
+2. Dùng stack để lưu những case thỏa mãn
+Kiểm tra xem stack không rỗng và phần tử đang xét có lớn hơn top không?
+Nếu không thì đơn thuần thêm vào stack với giá trị mặc định là 1
+Nếu có thì loại bỏ phần tử top và tăng value cho giá trị đang xét lên 10.
+Xem hình để hiểu quá trình mô phỏng
