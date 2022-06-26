@@ -1,0 +1,4 @@
+1. Kiểm tra xem có lúc nào dãy bị giảm 2 lần hay không?
+2. Với trường hợp đặc biệt, dãy chỉ có duy nhất 1 lần giảm nhưng không thể chỉnh sửa được với case như sau:
+a > b (a tại i - 1 và b tại i)
+y < a && y > b (y tại i - 2 và i + 1)

@@ -1,0 +1,6 @@
+We can either increase sum of nums1 or sum of num2
+If we want to increase sum of nums1, we will select subarray from i to j with maximum sum of nums2[i] - nums1[i];
+If we want to increase sum of nums2, we will select subarray from i to j with maximum sum of nums1[i] - nums2[i];
+
+Time Complexity -> O(N)
+Space Complexity -> O(1)
