@@ -1,0 +1,46 @@
+1. Sort by height, if height is equal, sort by second item
+
+2. Naive Algorithm:
+   for each item in seq:
+         find the new insert position and assign it to the item
+
+3. Case analysis:
+    [4,4], [5,0], [5,2], [6,1], [7,0], [7,1], total 6 sorted items
+    that means we must fill 6 blankets.     _ _ _ _ _ _
+    (1)[4,4] means there are 4 items before it, since no other items less than it, so it must be at the 5th pos.
+    (2)[5,0] means there are 0 items before it, so it must be at the first pos.
+    ......
+    (6)same as before
+
+   visualize process
+   -----------------
+
+     _      _      _      _      _      _
+     _      _      _      _    [4,4]    _
+   [5,0]    _      _      _    [4,4]    _
+   [5,0]    _    [5,2]    _    [4,4]    _
+   [5,0]    _    [5,2]  [6,1]  [4,4]    _
+   [5,0]  [7,0]  [5,2]  [6,1]  [4,4]    _
+   [5,0]  [7,0]  [5,2]  [6,1]  [4,4]  [7,1]
+
+4. Improved Algorithm
+    for each item in seq:
+         pos = find Kth avaliable position in newArray // K = item.second
+         newArray[pos] = item
+         used[pos] = true
+
+   Implement find_Kth() method can be done in O(n), thus total complexity is O(n^2)
+
+5. Implement find_Kth() method in O(lgN*lgN) or O(lgN) use BIT
+    (1)trick #1: to convert the former "fill blanket" to "range sum"
+    (2)trick #2: if height[i] == height[i+1], we must delay the "convert" operation as below described
+
+   visualize process
+   -----------------
+     1   1   1   1   1   1      // first initialize all position with 1
+     1   1   1   1   0   1     // find [4,4] pos by calling find_Kth(4+1), pos = 5, and convert 1 to 0
+     1   1   1   1   0   1     // find [5,0] pos by calling find_Kth(0+1), pos = 1, do not convert 1 to 0
+     0   1   0   1   0   1     // find [5,2] pos by calling find_Kth(2+1), pos = 3, and convert 1 to 0
+     0   1   0   0   0   1     // find [6,1] pos by calling find_Kth(1+1), pos = 4, and convert 1 to 0
+     0   1   0   0   0   1     // find [7,0] pos by calling find_Kth(0+1), pos = 2, do not convert 1 to 0
+     0   0   0   0   0   0     // find [7,1] pos by calling find_Kth(1+1), pos = 6, convert 1 to 0
