@@ -10,7 +10,6 @@ SUBDIRS += \
     HashTable \
     Heap \
     Stacks \
-    Recursive \
     Searching \
     Sorting \
     Tree
