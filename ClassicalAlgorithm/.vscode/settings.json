@@ -28,5 +28,10 @@
     "**/.*/**",
     "**/.vscode",
     "**/.vscode/**"
-  ]
+  ],
+  "files.associations": {
+    "ostream": "cpp",
+    "array": "cpp",
+    "string_view": "cpp"
+  }
 }
