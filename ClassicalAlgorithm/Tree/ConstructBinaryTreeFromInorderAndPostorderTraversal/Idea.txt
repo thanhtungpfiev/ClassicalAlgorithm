@@ -1,0 +1,48 @@
+Now, we want to create our binary tree with given postorder and inorder traversals.
+
+Observations:
+
+Inorder is LEFT ROOT RIGHT. So for any node lets say current node is at index i in inorder array, if you think it as a root of its subtree, then all the nodes at indices less than i will be on the left subtree of the current node and all the nodes at indices greater than i will be on the right subtree of the current node.
+
+Postorder is LEFT RIGHT ROOT. So the last element of our postorder array will always be our root, and then we will move backwards in our postorder array to find the next root.
+
+My Approach:
+
+Since Post Order traversal is like LEFT RIGHT ROOT, therefore we will traverse the postorder array from backwards and will construct our tree like ROOT RIGHT LEFT.
+
+Take our node from postorder array, let say it is at index idx (We came from postorder.size()-1 to idx) and this will be our root in current recursive call, then decrement the idx for our next upcoming root.
+
+Now find our current node (from step 2) in our inorder array (let say we found it at i), then we will have nodes in left subtree of current node who are at position less than i and nodes in right subtree of current node who are at position greater than i.
+
+So we make a recursive call to construct the right subtree first, then we make a recursive call to construct the left subtree of our current node. (Since we are building our Binary Tree in ROOT RIGHT LEFT).
+
+DRY RUN for algo explained above:
+
+Initial Situtation: (Step 1)
+
+Inorder array: [9,3,15,20,7]
+Postorder  array: [9,15,7,20,3]
+
+Hence 3 will be our root and inorder range for left subtree will be [9] and inorder range for right subtree will be [15, 20, 7]
+
+			3
+		  /	  \
+	   [9]    [15, 20, 7]   -> Inorder
+	   [9]    [15, 7, 20]   -> Postorder
+Step 2:
+
+			3
+		 /	    \
+		9	    20
+	   / \	    /  \
+	  *   *  [15] [7] -> Inorder
+			 [15] [7] -> Postorder
+Step 3:
+
+			3
+		 /	    \
+		9	    20
+	   / \	   /  \
+	  *   *   15   7
+			 / \  / \
+			 * *  * *
