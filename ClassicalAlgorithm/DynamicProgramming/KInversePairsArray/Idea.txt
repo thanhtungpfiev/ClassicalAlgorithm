@@ -1,0 +1,112 @@
+https://leetcode.com/problems/k-inverse-pairs-array/solution/
+
+Before we discuss the solution, let's look at the idea behind it. Let's say, nn represents the given number defining the upper limit of the elements in the arrays being considered and kk represents the number of inverse pairs in the current array.
+
+Let's start with a simple example with n=4n=4, no kk is defined right now. Now, for k=0k=0, the only possible arrangement for the given array a_0a
+0
+​
+  will be [1,2,3,4], since all the greater elements lie after the smaller elements. Now, in order to generate an arrangement with any arbitrary kk value, we need to shift, an arbitrary number of elements(let's say xx elements) in the array a_0a
+0
+​
+  towards the left, with each displacement(shift) being s_1, s_2, ...., s_xs
+1
+​
+ ,s
+2
+​
+ ,....,s
+x
+​
+ , such that the sum of these shifts equals kk.
+
+To see what we mean by the above statement, let's look at the case for [1,2,4,3]. The number of inverse pairs in this array is 1. This array is obtained by shifting the number 4 by one position towards the left.
+
+Similarly, consider the case for [2,4,1,3]. This array can be obtained from a_0a
+0
+​
+  by shifting 2 by one position towards the left first and then shifting 4 by 2 positions towards the left. Thus, the total number of displacements is 3, which is equal to the number of inverse pairs in the new array.
+
+This rule of displacements holds true because, whenever a number is shifted yy times towards the left starting from the array a_0a
+0
+​
+ , after the shift, yy numbers smaller than it lie towards its right, giving a total of yy inverse pairs.
+
+Now, let's say, we start with the one of the arrangements a_3a
+3
+​
+  [2,4,1,3], with k=3k=3. Now, if we want to add a new number 5 to this array to consider an array with n=5n=5, let's say, initially, we append it to the end of a_3a
+3
+​
+ . Now, the new array will be [2,4,1,3,5]. Since, the largest number is added at the end, the new number 5 doesn't add any new inverse pair to the total set of inverse pairs relative to the ones in a_3a
+3
+​
+ (3).
+
+Now, all the numbers in a_3a
+3
+​
+  are smaller than 5. Thus, if we add 5 at a position yy steps from the right, yy smaller numbers will lie towards its right. Thus, a total of yy inverse pairs will exist with 5 being one of the elements in these pairs.
+
+Thus, adding 5 at yy steps from the right adds a total of yy inverse pairs to the total set of inverse pairs in a_3a
+3
+​
+  giving a total of 3+y3+y inverse pairs now.
+
+Looking at the same statement from another point of view, we can say that, if we know the number of inverse pairs(say xx) in any arbitrary array bb with some nn, we can add a new element n+1n+1 to this array bb at a position pp steps from the right, such that x+p=kx+p=k to generate an array with a total of kk inverse pairs.
+
+Extending this idea further, suppose we know the number of arrangements of an array with n-1n−1 elements, with the number of inverse pairs being 0, 1, 2,..., k0,1,2,...,k, let's say being equal to count_0, count_1, count_2,.., count_kcount
+0
+​
+ ,count
+1
+​
+ ,count
+2
+​
+ ,..,count
+k
+​
+ . Now, we can determine the number of arrangements of an array with nn elements with exactly kk inverse pairs easily.
+
+To generate the arrangements with exactly kk inverse pairs and nn elements, we can add the new number nn to all the arrangements with kk inverse pairs at the last position. For the arrangements with k-1k−1 inverse pairs , we can add nn at a position 1 step from the right.
+
+Similarly, for an element with k-ik−i number of inverse pairs, we can add this new number nn at a position ii steps from the right. Each of these updations to the arrays leads to a new arrangement, each with the number of inverse pairs being equal to kk.
+
+The following image shows an example of how this is done for n=5 and k=4:
+
+Inversions
+
+Thus, to obtain the number of arrangements with exactly kk inverse pairs and nn numbers will be given by count_0 + count_1 + ... + count_kcount
+0
+​
+ +count
+1
+​
+ +...+count
+k
+​
+ .
+
+From the above discussion, we can obtain the recursive formula for finding the number of arrangements with exactly kk inverse pairs as follows. Let's say count(i,j)count(i,j) represents the number of arrangements with ii elements and exactly jj inverse pairs.
+
+If n=0n=0, no inverse pairs exist. Thus, count(0,k)=0count(0,k)=0.
+
+If k=0k=0, only one arrangement is possible, which is all numbers sorted in ascending order. Thus, count(n,0)=1count(n,0)=1.
+
+Otherwise, count(n,k) = \sum_{i=0}^{min(k,n-1)} count(n-1, k-i)count(n,k)=∑
+i=0
+min(k,n−1)
+​
+ count(n−1,k−i).
+
+Note that the upper limit on the summation is \text{min}(k,n-1)min(k,n−1). This is because for i>ki>k, k-i<0k−i<0. No arrangement exists with negative number of inverse pairs. The reason for the other factor can be seen as follows.
+
+To generate a new arrangement adding k-ik−i new inverse pairs after adding the n^{th}n
+th
+  number, we need to add this number at the i^{th}i
+th
+  position from the right. For an array with size nn, only n-1n−1 maximum shifts are possible.
+
+We need to take the modulus at every step to keep the answer within integral limits.
+
+We can see that a lot of duplicate function calls are made in the normal recursive solution. We can remove this redundancy by making use of a memoization array which stores the result for any function call kInversePairs(i,j) in memo[i][j]memo[i][j]. Thus, whenver a duplicate function call is made again, we can return the result directly from this memoization array. This prunes the search space to a great extent.
