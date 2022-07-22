@@ -14,7 +14,7 @@ using namespace std;
 class Solution
 {
 public:
-    int longestCommonSubsequence(string text1, string text2)
+   int longestCommonSubsequence(string text1, string text2)
     {
         vector<vector<int>> dp = vector<vector<int>>(text1.length() + 1, vector<int>(text2.length() + 1));
         for (int i = 1; i <= text1.length(); ++i)

@@ -72,6 +72,8 @@
     "typeinfo": "cpp",
     "chrono": "cpp",
     "random": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "bitset": "cpp",
+    "regex": "cpp"
   }
 }

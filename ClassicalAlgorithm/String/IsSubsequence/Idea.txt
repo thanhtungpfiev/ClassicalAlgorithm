@@ -1,0 +1,11 @@
+BruteForce Approach
+
+Just we need to compare both string by traversing
+if t[i] == s[i] , we will increase the count.
+if cnt == s.length() this means t is the subsequence of s
+As, it contains alll the characters.
+
+MEMOIZATION TECHNIQUE
+
+Here the idea is to check whether the size of the longest common subsequence is equal to the size of str1.
+If it’s equal it means there is a subsequence that exists in str2.
