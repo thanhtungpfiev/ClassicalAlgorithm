@@ -1,0 +1,2 @@
+https://leetcode.com/problems/range-sum-query-mutable/solution/
+Approach 3: Segment Tree
