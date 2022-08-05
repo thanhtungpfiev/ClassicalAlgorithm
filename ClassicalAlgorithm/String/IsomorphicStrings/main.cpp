@@ -43,6 +43,36 @@ public:
     }
 };
 
+class Solution
+{
+public:
+    bool isIsomorphic(string s, string t)
+    {
+        unordered_map<char, char> ht1;
+        unordered_map<char, char> ht2;
+        for (int i = 0; i < s.length(); ++i)
+        {
+            if (ht1.find(s[i]) != ht1.end())
+            {
+                if (ht1[s[i]] != t[i])
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (ht2.find(t[i]) != ht2.end())
+                {
+                    return false;
+                }
+                ht1[s[i]] = t[i];
+                ht2[t[i]] = s[i];
+            }
+        }
+        return true;
+    }
+};
+
 int main(int argc, char **argv)
 {
     Solution sl;

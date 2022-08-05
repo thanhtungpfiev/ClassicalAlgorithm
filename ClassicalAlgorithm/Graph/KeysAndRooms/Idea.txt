@@ -1,0 +1,1 @@
+Đưa về bài toán kiểm tra xem đồ thị có connected (tất cả các nút đều có đường đi đến từ 1 nút nguồn)

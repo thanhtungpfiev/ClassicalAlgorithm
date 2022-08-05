@@ -48,6 +48,8 @@ public:
     void DFSRec(int index, std::vector<int> &visited);
     void BFS();
     void BFSQueue(int index, std::vector<int> &visited);
+    int PathExist(int source, int destination);
+    bool isConnected();
 };
 Graph::Edge::Edge(int src, int dst, int cst = 1)
 {
@@ -204,6 +206,35 @@ void Graph::BFSQueue(int index, std::vector<int> &visited)
             head = head->next;
         }
     }
+}
+
+int Graph::PathExist(int source, int destination)
+{
+    std::vector<int> visited(count);
+    for (int i = 0; i < count; i++)
+        visited[i] = 0;
+    visited[source] = 1;
+    DFSRec(source, visited);
+    return visited[destination];
+}
+
+bool Graph::isConnected()
+{
+    std::vector<int> visited(count);
+    for (int i = 0; i < count; i++)
+    {
+        visited[i] = 0;
+    }
+    visited[0] = 1;
+    DFSRec(0, visited);
+    for (int i = 0; i < count; i++)
+    {
+        if (visited[i] == 0)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 int main(int argc, char **argv)

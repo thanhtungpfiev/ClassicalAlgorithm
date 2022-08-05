@@ -48,6 +48,34 @@ public:
     }
 };
 
+class Solution
+{
+public:
+    bool isSubsequence(string s, string t)
+    {
+        unordered_map<char, vector<int>> ht;
+        for (int i = 0; i < t.length(); ++i)
+        {
+            ht[t[i]].push_back(i);
+        }
+        int prev = -1;
+        for (auto c : s)
+        {
+            auto &v = ht[c];
+            auto it = upper_bound(v.begin(), v.end(), prev);
+            if (it == v.end())
+            {
+                return false;
+            }
+            else
+            {
+                prev = *it;
+            }
+        }
+        return true;
+    }
+};
+
 int main(int argc, char **argv)
 {
     Solution sl;
