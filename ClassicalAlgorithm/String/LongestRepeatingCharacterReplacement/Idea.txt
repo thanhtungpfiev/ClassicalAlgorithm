@@ -1,0 +1,1 @@
+https://leetcode.com/problems/longest-repeating-character-replacement/discuss/208284/C%2B%2B-Sliding-Window-With-Detailed-Explanation-and-Thinking-Process
