@@ -1,0 +1,3 @@
+This is a nice & easy solution to the problem. Key is here to make Node out of middle number and pass on the left of the array to form left tree and right half of the tree to form the right array. If someone is looking for a visual rundown of the code then check out this video
+
+https://www.youtube.com/watch?v=5G7jNmqGUck
