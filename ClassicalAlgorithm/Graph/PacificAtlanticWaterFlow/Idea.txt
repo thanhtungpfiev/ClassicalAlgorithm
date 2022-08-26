@@ -1,0 +1,10 @@
+https://leetcode.com/problems/pacific-atlantic-water-flow/discuss/1126938/Short-and-Easy-w-Explanation-and-diagrams-or-Simple-Graph-traversals-DFS-and-BFS
+
+In a naive approach, we would have to consider each cell and find if it is reachable to both the oceans by checking if it is able to reach - 1. top or left edge(atlantic) and, 2. bottom or right edge (pacific). This would take about O((mn)^2), which is not efficient.
+
+Now, if we start from the cells connected to altantic ocean and visit all cells having height greater than current cell (water can only flow from a cell to another one with height equal or lower), we are able to reach some subset of cells (let's call them A).
+
+Next, we start from the cells connected to pacific ocean and repeat the same process, we find another subset (let's call this one B).
+
+The final answer we get will be the intersection of sets A and B (A ∩ B).
+

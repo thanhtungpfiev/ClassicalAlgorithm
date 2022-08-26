@@ -1,0 +1,2 @@
+For every node, length of longest path which pass it = MaxDepth of its left subtree + MaxDepth of its right subtree.
+

@@ -82,8 +82,62 @@ public:
     }
 };
 
+class Solution
+{
+public:
+    int search(vector<int> &nums, int target)
+    {
+        int result = -1;
+        int start = 0, end = nums.size() - 1, index = -1;
+        while (start <= end)
+        {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] > nums[nums.size() - 1])
+            {
+                start = mid + 1;
+            }
+            else
+            {
+                end = mid - 1;
+                index = mid;
+            }
+        }
+        cout << index << endl; //  find the index of the smallest value using binary search.
+        if (target == nums[index])
+        {
+            result = index;
+        }
+        else if (target > nums[nums.size() - 1])
+        {
+            auto it = lower_bound(nums.begin(), nums.begin() + index, target);
+            if (it != nums.end() && (*it == target))
+            {
+                result = distance(nums.begin(), it);
+            }
+        }
+        else
+        {
+            auto it = lower_bound(nums.begin() + index, nums.end(), target);
+            if (it != nums.end() && (*it == target))
+            {
+                result = distance(nums.begin(), it);
+            }
+        }
+        return result;
+    }
+};
+
 int main(int argc, char **argv)
 {
     cout << "Hello World" << endl;
+
+    // Input: nums = [4,5,6,7,0,1,2], target = 0
+    // Output: 4
+
+    // Input: nums = [4,5,6,7,0,1,2], target = 3
+    // Output: -1
+
+    // Input: nums = [1], target = 0
+    // Output: -1
     return 0;
 }

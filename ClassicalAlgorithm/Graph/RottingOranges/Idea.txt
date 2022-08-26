@@ -1,0 +1,2 @@
+https://leetcode.com/problems/rotting-oranges/discuss/588024/C%2B%2B-or-BFS-or-100-Space-95-time-or-explanation-of-logic
+The trick is to start bfs from all initial rotten oranges simultaneously to get minimum time, this way any oranges that can get rotten due to more than 1 initially rotten oranges will be covered by the nearest one.
