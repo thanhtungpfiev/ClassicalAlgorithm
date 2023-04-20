@@ -1,0 +1,570 @@
+1. 1stProblem - 81. Search in Rotated Sorted Array II (Leet code)
++ Native search => O(n)
++ Binary search => O(logn) (mid = target break; mid < target start = mid + 1; mid > target end = mid - 1)
+	=> 2 dãy sắp xếp tăng dần => Phần tử start của dãy 1 luôn luôn lớn hơn các phần tử của dãy 2
+	=> Xét vị trí của mid (start + (end - start) / 2) và target xem đang nằm trong dãy nào để tìm ra khoảng binary search kế tiếp
+	=> Các phần tử trùng nhau => không thể áp dụng binary search => so sánh với phần tử start => nếu bằng thì tăng start lên 1 để có khoảng binary search kế tiếp
+
+2. 2ndProblem - 33. Search in Rotated Sorted Array (Leet code)
++ Binary search => find the index of pivot => compare with last index value (vì dãy tách thành 2 dãy tăng dần, phần tử cuối là phần tử lớn nhất của dãy nhỏ, phần tử chốt là phần tử lớn nhất trong toàn dãy)
+
+3. 3rdProblem - 5. Longest Palindromic Substring (Leet code)
++ Exhaustive search => Lấy từng chuỗi O(n^2) => Kiểm tra xem chuỗi có phải là palindromic không O(n) => Chi phí là O(n^3)
++ Giảm không gian tìm kiếm
+	+ Dùng biến giữ giá trị lớn nhất của chuỗi con hiện tại, nếu cấu hình kiểm tra có độ dài nhỏ hơn thì bỏ qua.
++ Sắp xếp lại không gian tìm kiếm
+	+ Bắt đầu tìm từ chuỗi dài nhất rùi giảm dần đến chuỗi nhỏ hơn
++ DP
+	P[i,i] = true // 1 letter
+	P[i, i + 1] = (s[i] == s[i + 1]) // 2 letters
+	P[i,j] = P[i + 1, j - 1] && s[i] == s[j] // >= 3 letters
+
+4. 4thProblem - REPROAD - Repair road (spoj)
++ Exhaustive search => Lấy từng cấu hình O (n^2) => Kiểm tra xem độ dài cấu hình (đoạn đang xét) có lớn hơn max && kiểm tra đoạn đó có phải là đoạn thỏa mãn lượng số 0 < K (cost) hay không
++ Stack
+Dùng tham lam: Nhận xét thấy rằng việc khác nhau giữa hai cấu hình hợp lệ (i1,j1) và (i2, j2)
+trong đó i1 <i2, j1 < j2 phải thỏa mãn: Số số 0 nằm trong khoảng i1 đến i2 nhỏ hơn hoặc bằng số
+số 0 nằm trong j1 đến j2.
+Do đó, việc tính toán cấu hình tiếp theo từ cấu hình hiện có (i1, j1) bằng cách tăng i1 lên thành i2
+với số số 0 nằm trong i1 và i2 là 1 số 0. Tương tự với j1 và j2.
+Cấu hình đầu tiên hợp lệ là cấu hình đã sửa K đoạn hỏng đầu tiên.
+Bằng cách stack lại các vị trí của i, ta có thể loại bỏ việc tìm i2 -> giảm độ phức tạp xuống còn
+O(n)
+
+=> 1 vòng for duyệt toàn bộ dãy => Kiểm tra phần tử đó là 0 hay 1
+	=> Nếu là 0 => nếu cost < K => tăng cost và len lên 1 đơn vị
+					nếu không => tính lại đoạn khác len = i - q.front(), q.pop_front(); (số 0 mới đc đưa vào vị trí neo sau khi K lần sửa đã được áp dụng)
+				đưa i vào stack là mốc của số 0 hiện tại
+	+ Nếu không thì tăng len lên (vì đoạn đó là 1)
+	+ Check kết quả bằng max của len và kết quả
+
+5. 5thProblem - Liệt kê cấu hình cho bài toán n!
+	+ Phương pháp sinh
+		Khởi đầu với 1 cấu hình tăng dần từ 1 -> n (nhưng khi code thì nên tạo mảng có n + 1 phần tử, với phần tử đầu tiên là 0)
+		Tìm dãy con giản dần dài nhất
+		Tim phần tử đầu tiên trong dãy con đó lớn hơn i - 1 (phần tử đứng kế ngày trc dãy con)
+		Đảo 2 phần tử cho nhau
+		Đổi dãy con giảm dần thành dãy con tăng dần
+		Kết thúc khi dãy toàn phần tử giảm dần
+	+ Quay lui
+		Dùng 1 mảng đánh dấu
+		Thử từ 1
+		Duyệt từ v = 1 -> n
+		Neu mark[v] chưa đánh dấu => gán giá trị => Nếu là cấu hình cuối (i == n) => In giá trị
+														Nếu không => Đánh dấu phần tử thứ v là đã chọn => Thử với i + 1 => Bỏ đánh dấu phần tử thứ v
+6. 6thProblem - Liệt kê cấu hình cho bài toán Akn (n!/)n-k)!)
+Tương tự bài toán 5 nhưng tốt nhất nên dùng thuật toán quay lui với điều kiên thay n bằng k ở cấu hình cuối
+
+7. 7th Problem - Liệt kê cấu hình cho bài toán Ckn = Akn/n!
+	+ Phương pháp sinh
+		1. Tìm từ cuối lên đầu dãy cho đến khi gặp phần tử x(i) chưa đạt giới hạn trên n - k + i.
+		2. Tăng x(i) lên một đơn vị.
+		3. Đặt lại tất cả các phần tử phía sau bằng giới hạn dưới.
+	+ Quay lui
+		Xét tất cả các cách chọn x1 từ 1 (x0 + 1) đến n - k + 1, với mỗi giá trị đó xét tất cả các lựa chọn x2 từ x1+1 đến n - k + 2, ...., cứ như vậy đến x(k) thì ta có cấu hình cần liệt kê.
+		=> giá trị v chạy từ x[i - 1] + 1 -> n - k + i
+		Thử từ 1 -> n
+
+8. 8th Problem - Liệt kê dãy nị phân có độ dài n
+	+ Quay lui
+		Giá trị gán v chạy trong khoảng 0, 1
+		Thử từ i = 1 -> n
+
+9. 9th Problem - https://www.spoj.com/problems/BURGLARY/
+	+ Liệt kê 2^n dãy nhị phân, với 1 ứng với phần tử j đc chọn, và 0 không được chọn
+	+ Chia đôi dãy, dùng map (Liệt kê tất cả các dãy con của n/2) => kiểm tra từng dãy có tổng nào chọn được bằng nhiều số K không => Tổng hợp lại. Nếu từng dãy có value sum = -2 thì bỏ, không thì tính số lượng phần tử hiện tại bằng tổng, kiểm tra giá trị trước xem có khác không, nếu khác thì cho là -2, không thì lưu lại.
+		Lưu ý trong lúc sinh phải kiếm tra tổng bằng 0 có hình thành bằng các phần tử 0 không, nếu có thì cho bằng -2, không thì cho bằng 0.
+		Các tổng khác 0 thì sẽ kiểm tra xem đã update vào map chưa, nếu chưa thì lưu value bằng số lượng phần tử, nếu rồi thì lưu value = -2
+
+10. 10th Problem - QuickSort
+
+11. 11th Problem - Searching
+	+ Sequence search - Tìm kiềm lần lượt dãy khóa -> O(n)
+	+ Binay search -> Dãy khóa đã sắp xếp -> Chia đôi dãy khóa để tìm -> O(logn)
+		mid = start + (end - start) / 2
+		while (start <= end) search key and update start/end bằng mid
+
+12. 12th Problem - Merge sort - TopDown
+	if (i < iMiddle && (j >= iEnd || A[i] < A[j])) { //nếu dãy bên trái vẫn còn phần tử kết hợp với dãy bên phải hết phần tử hoặc cả hai dãy vẫn còn phần tử nhưng phần tử bên trái nhỏ hơn phần tử bên phải.
+
+13. 13th Problem - Tìm tập con liên tục có tổng lớn nhất
+	+ Vét cạn -> tính tổng từng tập con -> tìm tập có tổng lớn nhất -> O(n^3)
+	+ Áp dụng chia để trị ta có thể giải bài toán này theo cách sau:
+
+Chia mảng ban đầu thành hai mảng
+Trả ra tổng lớn nhất của:
+Tổng lớn nhất của mảng bên trái (bằng cách gọi đệ quy)
+Tổng lớn nhất của mảng bên phải (bằng cách gọi đệ quy)
+Tổng lớn nhất của mảng gồm phần tử cả phần tử ở giữa
+	+ Thuật toán Kadane
+
+Initialize:
+    max_so_far = INT_MIN
+    max_ending_here = 0
+
+Loop for each element of the array
+  (a) max_ending_here = max_ending_here + a[i]
+  (b) if(max_so_far < max_ending_here)
+            max_so_far = max_ending_here
+  (c) if(max_ending_here < 0)
+            max_ending_here = 0
+return max_so_far
+
+14. 14th Problem - Tìm cặp điểm gần nhất
+	+ Vét cạn -> Tìm khoảng cách của từng cặp điềm -> O(n^2) -> Chú ý tọa độ x, y theo kiểu long
+
+15. 15th Problem - 35. Search Insert Position - https://leetcode.com/problems/search-insert-position/
+	+ Vét cạn -> Duyệt từng phần tử -> Kiểm tra khóa -> Nếu bằng -> trả về vị trí tồn tại
+														Nếu khác -> kiểm tra xem khóa nhỏ hơn phần tử đầu -> 0
+																 -> kiểm tra xem khóa lớn hơn phần tử cuối -> n - 1
+																 ->	kiểm tra khóa có vừa lớn hơn phần tử đó vừa nhỏ hơn phần tử kế cận -> trả về vị trí chèn
+	+ Binary search -> Khóa bằng mid -> Insert vào phần tử low nếu k thấy khóa
+
+16. 16th Problem - https://www.spoj.com/problems/ABCDEF/
+	+ Vét cạn -> Duyệt từng phần tử thỏa mãn -> tăng result lên 1 => O(n^6)
+	+ Chuyển biểu thức thành 2 mảng => Tìm số phần tử của mảng 1 trong mảng 2 (lưu ý 2 mảng nên sắp xếp, đếm bằng vị trí trên - vị trí dưới) => O (n^3 * logn)
+
+17. 17th Problem - Difficulty of an array - https://codingcompetitions.withgoogle.com/kickstart/round/000000000019ffc7/00000000001d3f5b
+	+ Vét cạn D từ 1 -> phần tử cuối (do dãy tăng dần). Với mỗi D kiểm tra xem số phần tử thêm vào có thỏa mãn nhỏ hơn k không => O(n^2)
+	+ Nhận xét D đã sắp xếp giảm dần, có thể dùng binary search để tìm D trong khoảng từ 0 -> v[N-1] - v[0] (đk lặp: l < r - 1) D = r => O(nlogn)
+	+ Thêm code tăng tốc tính toán
+	std::ios::sync_with_stdio(false);
+  	std::cin.tie(0);
+  	std::cout.tie(0);
+
+18. 18th Problem - Socially Distancing - Problem D, LG code jam Online Round 1 - https://codejam.lge.com/contest/problem/609/4
+	+ Tương tự bài 17
+
+19. 19th Problem - Cho số tự nhiên n ≤ 100. Hãy cho biết bao nhiêu cách phân tích số n thành tổng của các số nguyên dương, các hoán vị của nhau chỉ tính là một cách
+	Xây dựng công thức truy hồi:  F[m,v] là số cách phân tích số v thành tổng các số nguyên dương ≤ m
+	+ F[m,v] = F[m-1,v] nếu m > v
+	+ F[m,v] = F[m-1, v] + F[m, v-m] nếu m ≤ v.
+	+ F[0,0] = 1 và F[0,v] = 0 với mọi v > 0.
+	+ Cách thông thường: để tính các phần tử trong bảng F phải tuân theo thứ tự thừ trên xuống, và trên mỗi hàng thì từ trái qua phải.
+	+ Cách đệ quy: không quan tâm thứ tự tính toán. Có thể tối ưu bộ nhớ không tính toán lại nhiều lần bằng cách: Ban đầu giá trị của mảng là "chưa biết" (gán cho một giá trị đặt biệt), hàm getF(m,v) khi được gọi sẽ tra cứu đến F[m,v] nếu F[m,v] là chưa biết thì hàm getF(m,v) sẽ gọi đệ quy để tính F[m,v] rồi dùng giá trị này là kết quả của hàm. Còn nếu F[m,v] đã biết thì hàm chỉ việc dùng giá trị của F[m,v] là kết quả của hàm.
+
+20. 20thProblem - https://www.spoj.com/problems/LIS/ - Dãy con đơn điệu tăng dài nhất
+	+ Dùng kỹ thuật lính canh -> Bổ xung hai vào dãy A hai phần tử a0 = -∞ và a(n+1) = +∞. Khi đó dãy con đơn điệu tăng dài nhất chắc chắn sẽ bắt đầu từ a0 và kết thúc ở a(n+1)
+	+ Với mọi i: 0 ≤ i ≤ n+1. Ta sẽ tính L[i] là độ dài dãy con đơn điệu dài nhất bắt đầu từ vị trí thứ i đến vị trí n+1.
+	Cơ sở quy hoạch động:
+		L[n+1] = 1. Dãy con này chỉ gồm một phần tử +∞.
+	Công thức truy hồi:
+		Xét tất cả chỉ số j từ i+1 đến n+1 mà a(j) > a(i), chọn ra chỉ số jmax mà có L[jmax] là lớn nhất. Đặt L[i] = L[jmax] +1.
+	Truy vết:
+		Tại mỗi bước xây dựng L[i], mỗi ghi ta gán L[i] = L[jmax] +1, ta đặt T[i] = jmax. Để lưu lại rằng dãy con dài nhất bắt đầu tại a(i) sẽ có phần tử kế tiếp là a(jmax).
+		T[0] là phần tử đầu tiên được chọn.
+		T[T[0]] là phần tử thứ hai được chọn.
+		T[T[T[0]]] là phần tử thứ ba được chọn.
+
+21. 21thProblem - https://www.spoj.com/problems/KNAPSACK/ - Bài toán cái túi (knapsack)
+	F[i,j] là giá trị lớn nhất có thể có bằng cachs chọn trong các gói {1, 2, ..., i} với giới hạn trọng lượng là j => giá trị lớn nhất khi được chọn trong n gói với giới hạn trọng lượng M chính là F[n,M].
+
+	Công thức truy hồi:
+		Nếu không chọn gói thứ i F[i,j] = F[i-1,j]
+		Nếu chọn gói thứ i (trong điều kiện W(i) ≤ j) F[i,j] = V[i] + F[i-1, j-W[i]].
+		F[i,j] sẽ là giá trị lớn nhất trong hai giá trị thu được ở trên.
+	Cơ sở quy hoạch động:
+		Dễ thấy F[0,j] = 0. Do không có gói nào để lựa chọn.
+	Tính bảng phương án:
+		Bảng phương án F gồm n+1 dòng, M + 1 cột, trước tiên điền cơ sở quy hoạch động
+		Dòng 0 gồm toàn số 0. Sử dụng công thức truy hồi, dùng dòng thứ 0 tính dòng thứ 1, dùng dòng thứ 1 tính dòng thứ 2,.... đến khi tính hết dòng thứ n.
+		Truy vết:
+			Tính xong bảng phương án thì ta quan tâm đến F[n,M], là giá trị lớn nhất thu được khi chọn trong n gói với giới hạn trọng lượng M.
+			Nếu F[n,M] = F[n-1,M] thì tức là ta không chọn gói thứ n, ta truy vết tiếp từ F[n-1,M].
+			Còn nếu F[n,M] ≠ F[n-1,M], thì ta thông báo rằng phương án tối ưu có chọn gói thứ n và tiếp tục truy vết tiêp từ F[n-1, M-W[n]].
+			Cứ tiếp tục cho đến khi đến hàng 0 của bảng phương án.
+
+22. 22thProblem - https://www.spoj.com/problems/EDIST/ - Biến đổi xâu
+	Đôi với xâu ký tự, việc chèn hay xóa sẽ làm cho các phần tử phía sau vị trí biến đổi bị đánh chỉ số lại, gây khó khăn cho việc quản lý vị trí. Để khắc phục điều này, ta sẽ tìm một thứ tự biến đổi thỏa mãn:
+	Phép biến đổi tại vị trí i bắt buộc phải thực hiện sau các phép biến đổi tại vị trí i+1, i+2,...
+	Công thức truy hồi:
+		Giả sử m là độ dài của xâu X, n là độ dài của xâu Y. Gọi F[i,j] là số phép biến đổi tối thiểu để biên xâu gồm i ký tự đầu của xâu X: X1X2..Xi thành j ký tự đầu tiên của xâu Y: Y1Y2...Yj.
+		Ta nhận thấy nếu X(m) = Y(n) thì ta chỉ cần biến đoạn X1X2....X(m-1) thành Y1Y2...Yn-1: Trong trường hợp này F[m,n] = F[m-1, n-1]
+		Nếu X(m) ≠ Y(n) thì tại vị trí X(m) ta có thể sử dụng một trong ba phép biến đổi:
+			1. Chèn vào sau vị trị m của X một ký tự đúng bằng Y(n): F[m,n] = 1 + F[m, n-1]
+			2. Thay vị trí m của X bằng một ký tự đúng bằng Y(n): F[m,n] = 1 + F[m -1, n-1]
+			3. Xóa vị trí thứ m của X: F[m,n] = 1 + F[m -1, n]
+			Vì F[m,n] phải là nhỏ nhất nên trong trường hợp X(m) ≠ Y(n) thì
+				F[m,n] = min(F[m, n-1],  F[m -1, n-1], F[m -1, n]) + 1
+	Cơ sở quy hoạch động:
+		F[0,j] là số phép biến đổi xâu rỗng thành xâu j ký tự. Do đó nó cần tối thiểu j phép chèn:
+			F[0,j] = j
+
+		F[i,0] là số biến đổi xâu i ký tự ban đầu thành xâu rông. Do đó nó cần thối thiểu i phép xóa:
+			F[i,0] = i
+
+		Vậy thì đầu tiên bảng phương án F được khởi tạo hàng 0 và cột 0 là cơ sở quy hoạch động. Từ đó dùng công thức truy hồi để tính ra tất cả các phần tử bảng phương án F.
+		Sau khi tính xong F[m,n] cho ta biết số phép biến đổi tối thiểu.
+
+	Truy vết:
+		Nếu X(m) = Y(n) thì chỉ việc xét tiếp F[m-1, n-1].
+		Nếu không, xét ba trường hợp:
+			Nếu F[m,n] = F[m,n-1] + 1 thì phép biến đổi đầu tiên được sử dụng là: Insert(m, Y(n))
+			Nếu F[m,n] = F[m-1,n-1] + 1 thì phép biến đổi đầu tiên được sử dụng là: Replace(m, Y(n))
+			Nếu F[m,n] = F[m-1,n] + 1 thì phép biến đổi đầu tiên được sử dụng là: Delete(m)
+			Đưa về bài toán m,n nhỏ hơn và truy vết tiếp cho tới khi về F[0,0].
+
+
+23. 23thProblem - Biểu diễn đồ thị
+	Ma trận kề: dùng 1 ma trận vuông V x V, với A[u,v] = 1
+	Danh sách cạnh: dùng 1 vector với cấu trúc dữ liệu là Edge (chứa thông tin 2 đỉnh u, v)
+	Danh sách kề: dùng 1 vector với số lượng tương ứng với số đỉnh V, trong từng phần tử là 1 vector chứa các đỉnh kề với đỉnh đó
+
+24. 24thProblem - Biểu diễn cây nhị phân tìm kiếm
+	Structure Node (data, left, right)
+	Thêm phần tử vào BST
+		Nếu bạn để ý, bạn sẽ nhận ra vị trí của các Node được thêm vào sẽ luôn Node lá(không có Child nào hết). Như vậy, tại vị trí đó trước khi các Node mới tới ở thì nó là NULL.
+		Ta có quy trình như sau:
+			Nếu Node hiện tại = NULL, đó là vị trí cần thêm. Thêm vào BST và kết thúc
+			Nếu giá trị cần thêm < giá trị root hiện tại, gọi đệ quy Insert vào cây con bên trái
+			Nếu giá trị cần thêm > giá trị root hiện tại, gọi đệ quy Insert vào cây con bên phải.
+	Xóa Node trong BST
+		Node cần xóa là Node lá(không có child nào cả)
+			Đơn giản là chỉ cần giải phóng ô nhớ đó
+		Node cần xóa có 1 child
+			Node bị xóa sẽ được giải phóng và cây con duy nhất của Node bị xóa sẽ được liên kết trực tiếp với cha của Node bị xóa.
+		Node cần xóa có đủ 2 child
+			Tìm Node của con trái nhất(giả sử nó là leftmost) của cây con bên phải của Node cần xóa.
+			Cập nhật giá trị của Node cần xóa = giá trị của Node leftmost.
+			Gọi đệ quy hàm Delete xóa Node leftmost khỏi BST.
+
+25. 25thProblem - Minimum Spanding Tree by Kruskal
+		Sắp xếp tất cả các cạnh theo thứ tự tăng dần của trọng số
+		Chọn cạnh min
+		Check cạnh đó có tạo thành chu trình với cây khung đang dựng hay không?
+			K tạo chu trình => thêm cạnh vào cây khung
+			Tạo chu trình => bỏ qua
+		Kiểm tra chu trình => tìm xem gốc của 2 đỉnh có trùng nhau không (đệ quy cho parent) => trùng tạo thành 1 chu trình
+																							=> không trùng => hợp nhất (cây nhiều nút hơn trở thành gốc)
+
+		Lặp chọn cạnh (V -1 hoặc hết cạnh)
+		main_1.cpp (node tính từ 0)
+		main.cpp (node tính từ 1)
+
+26. 26thProblem - Minimum Spanding Tree by Prim v1
+		Khởi tạo một cây với một đỉnh duy nhất, đỉnh này được chọn tùy ý từ đồ thị V.
+		Phát triển cây bằng cách thêm một cạnh vào cây đang có. Cạnh này là cạnh có trọng số nhỏ nhất trong những cạnh nối với cây từ những đỉnh chưa thuộc cây.
+		Lặp lại bước 2 cho đến khi tất cả các đỉnh đều nằm trong cây (tức là lặp lại V-1 lần).
+		Dùng ma trận kề -> O(V^2)
+		main_1.cpp (node tính từ 0)
+		main.cpp (node tính từ 1)
+
+27. 27thProblem - Minimum Spanding Tree by Prim v2
+		Dùng MinHeap (vector + sort) + Danh sách kề -> O(ElogV)
+		main_1.cpp (node tính từ 0)
+		main.cpp (node tính từ 1)
+		main_2.cpp (min heap bằng priority queue)
+
+28. 28thProblem - Djisktra - Sử dụng ma trận kề
+		Đánh dấu toàn bộ các nút là chưa thăm. Tạo ra một tập chứa toàn bộ các nút chưa thăm gọi là unvisited set.
+		Gán cho mọi nốt khoảng cách dự kiến từ S. Đặt bằng 0 cho nút S d[S] = 0 và +∞ cho tất cả các nút khác d[i] = +∞ với mọi i ≠ S. Đặt nút hiện tại u là S.
+		So sánh khoảng cách dự kiến hiện tại của các đỉnh v lân cận với u và khoảng cách nếu đi từ S → u → v. Nếu đi qua u gần hơn, cập nhật lại khoảng cách dự kiến của v là d[v].
+		Loại bỏ nút u ra khỏi unvisited set.
+		Lấy nút u nằm ở trong unvisited set mà có d[u] là nhỏ nhất
+
+29. 29thProblem - Heap
+		Operations on Min Heap:
+			1) getMini(): It returns the root element of Min Heap. Time Complexity of this operation is O(1).
+			2) extractMin(): Removes the minimum element from MinHeap. Time Complexity of this Operation is O(Logn) as this operation needs to maintain the heap property (by calling heapify()) after removing root.
+			3) decreaseKey(): Decreases value of key. The time complexity of this operation is O(Logn). If the decreases key value of a node is greater than the parent of the node, then we don’t need to do anything. Otherwise, we need to traverse up to fix the violated heap property.
+			4) insert(): Inserting a new key takes O(Logn) time. We add a new key at the end of the tree. IF new key is greater than its parent, then we don’t need to do anything. Otherwise, we need to traverse up to fix the violated heap property.
+			5) delete(): Deleting a key also takes O(Logn) time. We replace the key to be deleted with minum infinite by calling decreaseKey(). After decreaseKey(), the minus infinite value must reach root, so we call extractMin() to remove the key.
+
+30. 30thProblem - Djisktra - Sử dụng danh sách kề với MinHeap
+			1 list kiểu pair <weight, v>. Từng phần tử trong list là các đỉnh kề với đỉnh u.
+			Khở tạo heap với source, weight 0, mảng d lưu khoảng cách các phần tử đến source, d[source] = 0.
+			Duyệt từng đỉnh kề với u -> cập nhật đường đi đến đỉnh qua u.
+
+31. 31thProblem - BFS
+	Giả sử ta có một danh sách những đỉnh đang chờ "thăm". Tại mỗi bước, ta thăm một đỉnh đầu danh sách và cho những đỉnh chưa nằm trong danh sách kề với nó xếp hàng thêm vào cuối danh sách. Chính vì nguyên tắc đó nên danh sách chứa những đỉnh đang chờ sẽ được tổ chức dưới dạng hàng đợi (queue).
+	Loang màu: Dùng ma trận hàng cột (trên, phải ,dưới trái). Nhét điểm đang xét vào hàng đợi, lấy ra, tô màu. Xét các điểm xung quanh, nếu có màu cần tô thì nhét vào hàng đợi.
+
+32. 32thProblem - DFS
+	Từng bước ta xác định bước đi kế tiếp theo là đỉnh kề với đỉnh hiện tại mà chưa được thăm. Sử dụng ngăn xếp
+	Loang màu: Dùng ma trận hàng cột (trên, phải ,dưới trái). Nhét điểm đang xét vào ngăn xếp, lấy ra, tô màu. Xét các điểm xung quanh, nếu có màu cần tô thì nhét vào ngăn xếp.
+
+33. 33thProblem - Code Understanding Data - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/1
+	Bước 1: chạy code bằng tay - vẽ ra bảng kết quả - tìm ra quy luật của cặp value - from tương ứng với giá trị - chỉ số của mảng cũ => sol[from[i]] = A[i]
+	Bước 2: xây dựng được công thức:
+		from[0] = 0
+		from[i + 1] = (from[i] + value[i]) % N;
+		Nếu from[i + 1] từng tồn tại trong mảng from từ 0 đến i => next lên 1 cho đến khi gặp 1 giá trị mới
+
+34. 34thProblem - [Code understanding] Designing a communication buffer - http://collab.lge.com/main/display/~tung2.nguyen/2.7.2+%5BCode+understanding%5D+Designing+a+communication+buffer
+	Xác định có thể xóa code cũ đi và thêm mới code của mình không? Nếu được thì dùng phương án này để tiết kiệm thời gian
+	Với priority queue, kiểu dữ liệu định nghĩa, thì sử dụng thêm 1 struct và nạp chồng phương thức operator ()
+
+35. 35thProblem - Picutre recognition - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/3
+	Bước 1 - Đọc kỹ đề bài
+	Bước 2 - Chú ý câu các vùng đã tô vẫn có thể xác định được -> đánh dấu tọa độ min, max của từng mầu -> Màu có tọa độ min, max k thuộc bảng -> k dùng
+	Bước 3 - Những màu đã tô đè lên 1 màu khác -> Bỏ qua màu đó
+	Bài này kiểm tra việc thành thục ở việc đánh dấu và tìm kiếm trên mảng. Thuật toán đơn thuần là duyệt (vét cạn) và đánh dấu.
+
+36. 36thProblem - Unmanned train - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/4
+	Bước 1 - Đọc kỹ đề bài
+	Bước 2 - Xác định vùng chứa số 1 -> Dùng BFS hoặc DFS (tư tưởng là từ 1 điểm bắt đầu, loang ra các điểm xung quanh, điểm bắt đầu và điểm loang thỏa mãn điều kiện sẽ được update new value)
+	Bước 3 - Tìm điểm ngắn nhất giữa 2 vùng
+	Một trong những ứng dụng của duyệt theo chiều rộng là tìm đường đi ngắn nhất ở đồ thị không có trọng số.
+	Bài toán này đang kiểm tra mức độ thành thục của thuật toán loang (flood fill). Và kiểm tra việc sử dụng BFS để tìm kiếm đường đi ngắn nhất trên đồ thị không có trọng số hoặc các xử lý các tham số trong ma trận.
+
+37. 37thProblem - Road construction - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/5
+	Bước 1 - Đọc kỹ đề bài
+	Bước 2 - Bài toán đồ thị tim đường đi ngắn nhất với trọng số không âm => Dijisktra + priority queue
+	Bước 3 - Tư tưởng: sử dụng cấu trúc dữ liệu Point với tọa độ x, y và trọng số weight (khoảng các từ x, y đến gốc 0, 0).
+		Ban đầu tất cả các nút đều có weight là INT_MAX, trừ nút 0 có weight là 0.
+		Đẩy nút 0 vào queue (dùng 1 constructor với bool operator()(const Point& a, const Point &b) {return a.weight > b.weight);
+		Lấy nút đầu tiên ra khỏi queue (nút có khoảng cách đến 0 là min)
+		Tìm tất cả các lân cận của nút đó (4 đỉnh xung quanh), update lại khoảng cách từ các điểm lân cận đến nút 0 bằng công thức d[v] > d[u] + value(v) thì d[v] = d[u] + value(v). Đẩy nút có d[v] được cập nhật vào queue.
+	Bước 4 - In kết quả d[N-1][N-1]
+
+	Có hai giải thuật giải quyết bài toán tìm đường với chi phí ngắn nhất là  BFS với đồ thị không có trọng số và Dijkstra với đồ thị có trọng số không âm.
+	Bài này đang kiểm tra mức độ thành thục về thuật toán tìm đường ngắn nhất (Dijkstra) và tham lam do đó tham số chỉ vừa đủ để vượt quá vét cạn và nhỏ hơn rất nhiều với phương pháp tối ưu (n=100 so với 10,000).
+
+	Bài này cũng có 30% test case cho việc sử dụng vét cạn, với chỉ số là 30 điểm → ban có thể lấy 9 điểm nếu không biết cài đặt tham lam và Dijkstra.
+
+38. 38thProblem - Mario Game - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/6
+	Bước 1 - Đọc kỹ đề bài
+	Bước 2 - Nhận thấy bài toán liên quan đến việc chọn hay không chọn -> vét cạn 2^N bằng backtrack
+	Bước 3 - Tối ưu, quan sát kỹ đề bài, thấy trường hợp người ta ví dụ cho dãy tốt nhất, nhận xét là nhảy vào phần tử đầu và cuối của các dãy giảm dần là ok => Tham lam
+	Giải bằng phương pháp vét cạn
+		Nhận thấy rằng, một candidate là một tập hợp con của tập N phần tử. Do đó, ta sẽ sinh ra các tập con và đi kiểm tra kết quả của tập này.
+		Với mỗi phần tử, ta có thể chọn hoặc không chọn phần tử đó vào danh sách tập con. Nên số trường hợp thử nghiệm là 2^N.
+	Giải bằng phương pháp tham lam
+		Muốn kết quả được tối ưu, tại bước lẻ ta cần nhảy tới vị trí lớn nhất có thể, tại bước chẵn ta nhảy tới vị trị nhỏ nhất có thể.
+		Trong một chuỗi giảm dần, thì nhẩy bước lẻ vào số đầu tiên (là số lớn nhất trong chuỗi) và bước chẵn vào số cuối cùng (là số nhỏ nhất trong chuỗi) thì kết quả luôn là tối ưu nhất trong mọi cách nhảy.
+		Đối với dãy tăng dần thì bỏ qua dãy này để đạt kết quả tối ưu
+		Do mọi P[i] ≥ 1, và i bắt đầu từ 0 đến N-1 (0 ≤ i ≤ N-1) do đó nếu ta đặt phần tử lính canh P[N] = 0 → Dãy P luôn luôn có ít nhất một dãy giảm dần.
+		Do đó, giải thuật của ta là đi tìm dãy số giảm dần. Chiều cao lớn nhất đạt được là tổng chênh lệch của các số đầu tiên (lớn nhất) và cuối cùng (nhỏ nhất) của các dãy giảm dần.
+		Bài toán này kiểm tra mức độ tư duy toán học và việc sử dụng và cài đặt kỹ thuật tham lam (N tối đa là 10^9 nhưng bài chỉ cho 10^5).
+
+	Với cách vét cạn, ta vẫn có thể qua được các test case nhỏ (3/10 test case) → Vậy ta có thể sử dụng giả thuật tham lam cho bản thân trong khi đi thi bằng cách sử dụng vét cạn để tối ưu hóa số điểm đạt được trong trường hợp chưa nghĩ ra cách giải quyết tối ưu.
+
+39. 38thProblem - Walk - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/7
+	Bước 1 - Đọc kỹ đề bài
+	Nhận xét 1: Do mảng P đã được sắp xếp tăng dần, nên nhân viên thứ i có vị trí thực tế là:
+
+		Vị trí tính toán (P[i] + S[i] * T) nếu vị trí tính toán không vượt quá vị trí thực tế của nhân viên i + 1.
+		Vị trí thực tế của nhân viên i + 1 nếu vị trí tính toán vượt quá vị trí thực tế của nhân viên i + 1.
+		→ Để tính toán vị trị thực tế của nhân viên thứ i, ta cần biết vị trí thức tế của nhân viên thứ i + 1.
+
+	Nhận xét 2: Nhân viên cuối cùng (n-1) sẽ không bị ai chặn, nên vị trí thực tế cũng là vị trí tính toán.
+	Vậy để cách thức giải quyết của chúng ta là tính vị trí thực tế của nhân viên thứ (n-1) đầu tiên. Sau đó tính toán vị trí thực tế của các nhân viên n-2 đến 0.
+
+	Để ý rằng, dữ liệu cho là số lớn 10^9, cũng đúng là giá trị tối đa của int (32 bit). Do đó việc tính toán S[i] * T[i] sẽ vượt quá int.
+
+	Do đó phải đổi kiểu dữ liệu phù hợp hơn 64 bit → long long.
+
+	Bài toán này đang kiểm tra mức độ thành thạo về việc quản lý giới hạn dữ liệu. Một trong những lỗi có thể xảy ra trong lúc lập trình.
+
+40. 40thProblem - Roof garden of the building - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/8
+	Bước 1 - Đọc kỹ đề bài
+	Bước 2 - Sử dụng phương pháp vét cạn
+		Nhận xét 1: Ta thêm một lính canh vào vị trí thứ n với giá trị lớn hơn tất cả các tòa nhà đang có để đảm bảo tòa nhà cuối cùng luôn là lớn nhất → Việc duyệt dễ dàng hơn.
+
+		Để kiểm tra số tòa nhà nhìn thấy được từ tòa nhà thứ i, ta kiểm tra từ tòa nhà thứ i + 1 đến tòa nhà thứ n. Nếu có tòa nhà nào lớn hơn chiều cao H[i] của tòa nhà thứ i thì ta dừng → tính toán ra số tòa nhà nhìn thấy được từ tòa nhà thứ i.
+
+		Tiếp tục lặp lại việc trên từ tòa nhà đầu tiên (thứ 0) đến tòa nhà cuối cùng (thứ n-1) ta có tổng số mái nhà nhìn thấy được.
+	Bước 3 - Tối ưu vét cạn, sử dụng tham lam
+		Nhận xét 2: Ta thấy rằng ở vị trí thứ j, ta sẽ tính toán được các mái nhà nhìn thấy được của các tòa nhà bên trái nó mà có chiều cao thấp hơn nó.
+		Nhận xét 3: Chiều cao của các tòa nhà dựa vào tòa nhà thứ j để tính toán có thứ tự giảm dần.
+		Do đó, để giải quyết bài toán này, ta cần một cách lưu trữ nào đó để:
+			Đến tòa nhà thứ i, tính toán tất cả các tòa nhà có độ cao nhỏ hơn H[i] ở phía bên trái.
+			Chiều cao của các tòa nhà lưu trữ phải giảm dần
+		2 cách duyệt:
+
+			1. Duyệt từ đầu dãy đến N (phần tử lính canh có giá trị vô cùng). Đưa phần tử 0 vào dãy. Nếu phần tử i lớn hơn đỉnh stack -> dãy k thỏa mãn tính giảm dần, lấy từng phần tử phía trc trong stack ra và update kết quả (tính xem có bao nhiêu tòa nhà có thể nhìn thấy từ tòa nhà được lấy ra (i - top - 1). Đẩy phần tử thứ i vào dãy
+
+			2. Duyệ từ cuối dãy, tìm các phần tử mà nhỏ hơn phần tử i đang xét, bỏ ra ngoài, lưu index của phần tử lớn hơn gần nhất với phần tử đang xét. Nếu không tìm thấy thì đánh dấu là -1.
+			Duyệt dãy đánh dấu, phần tử  có index = -1 thì update kết quả bằng phần tử lính canh N (các phần tử ở phía đuôi k có phần tử nào lớn hơn nó)
+
+41. 41thProblem - Researcher health promotion project - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/9
+		Bước 1 - Đọc kỹ đề bài
+		Bước 2 - Sử dụng phương pháp vét cạn -> O(2^N)
+			if (step == N) {  // Nếu cấu hình đã được tao ra xong
+			if (step > 1 && selected[step-1] && selected[step-2]) { // Nếu hai bước đằng trước đó đã nằm trong cấu hình rồi -> Không chọn bước này
+			if (step > 0 && !selected[step-1]) { // Nếu bước đằng trước chưa được chọn -> Thì tại bước này phải bước vào, nếu không chọn tiếp bậc này thì bạn bỏ qua hai bậc thang -> vi phạm điều lệ của đề bài
+			còn lại -> // Bạn có hai lựa chọn là bước vào hoặc không bước vào bước này
+		Bước 3 - Tối ưu sử dụng quy hoạch động - O(N)
+			Nhận xét 1: Với điều kiện không được bước quá hai bước. Do đó tại bước thứ i, nếu ta chọn bước thứ i thì số trường hợp có thể hình thành là
+				Bước từ vị trí thứ i-1
+				Bước từ vị trí i-2.
+					Như vậy nếu gọi d[i] là kết quả tốt nhất tại bước thứ i, ta có:
+						d[i] = P[i] + d[i-1];
+						d[i] = P[i] + d[i-2];
+			Nhận xét 2:Tuy nhiên, với điều kiện không được bước ba bước liên tiếp. Nếu d[i-1] bao gồm bước vào vị trí i-2 → Vi phạm điều kiện đầu bài.
+				Do đó, để chắc chắn ta vị trí i-2 không bước vào ta bước vào vị trí i-3 bỏ qua i-2 và bước tới vị trị i-1.
+					Tức là d[i] = P[i] + P[i -1] + d[i-3] thay vì d[i] = P[i] + d[i-1]
+			Nhận xét 3:
+				Với N = 1, thì kết quả là P[0]; (do P[i] không âm)
+				Với N = 2, thì kết quả tốt nhất là P[0] + P[1], bước vào cả hai bậc thang
+				Với N = 3, thì kết quả là kết quả tốt nhất của P[0] + P[2] hoặc P[1] + P[2]
+			 Do đó, ta có :
+				Công thức truy hồi d[i] = P[i] + max(P[i -1] + d[i-3], d[i-2])
+				Cơ sở quy hoạch động d[0] = P[0], d[1] = P[0] + P[1], d2 = P[2] + max(P[0], P[1])
+				Bảng phương án d là mảng một chiều
+42. 42thProblem - Calculator - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/10
+		Bước 1 - Đọc kỹ đề bài
+		Nhận xét 1: Nếu tính vị trí của các chữ số trong số A và B bắt đầu từ 0 khi nhân số thứ i của số A với số thứ j của số B thì vị trí của kết quả A[i]*B[j] là i + j
+		Nhận xét 2: Nếu A có i chữ số (tính từ 0) và B có j chữ số (tính từ 0) thì A*B có tối đa i+j+1 chữ số (tính từ 0). (+1 do bù của số lớn nhất nếu có). => vector<int> ban đầu là N + M - 1. Sau đó thêm phần tử bù cuối cùng sau.
+		Nhận xét 3: Đối với cơ số khác 10, ta chuyển đổi sang cơ số 10 rồi áp dụng phép nhân như với cơ số 10.
+		Nhận xét 4: Hai số S,D có độ dài tối đa là 100 (số tối đa là 36^100), quá cách lưu trữ của số nguyên là 2^64 nên ta không thể chuyển về số nguyên để tính toán xong chuyển ngược lại.
+		Nhận xét 5: Nếu một trong hai số là âm, ta chỉ cần tính tích hai số dương, sau đó đảo dấu.
+		-> Thông thạo cách tính toán học:
+			+ Chuyển chữ thành số (int(c) - '0', int(c) - 'A' + 10)
+			+ Chuyển số thành chữ (char (n + '0'), char(n - 10 + 'A')
+			+ Nếu phần tử lớn hơn Base
+				Lấy thương là số bù cho phần tử tiếp theo (tính từ đuôi)
+				Lấy dư là kết quả của phần tử hiện tại (tính từ đuôi)
+			+ Kiểm tra phần tử đầu (0) có bù hay không
+
+43. 43thProblem - Psychology experiment - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/11
+		Bước 1 - Đọc kỹ đề bài, chú ý dãy tăng dần
+		Bước 2 - Vét cạn - Dùng 2 vòng for check từng cấu hình (O(N^2)
+		Bước 3 - Dùng tham lam O(N)
+			Nhận xét 1: Do dãy A là dãy tăng dần, đo đó tổng A[i] + A[j] >  A[i] + A[k] với i < k < j. Tức với mọi k nằm trong khoảng từ i đến j ta luôn có tổng A[i] + A[j] lớn hơn tổng A[i] + A[k] ( do A[j] > A[k])
+			Nhận xét 2: Do dãy A là dãy tăng dần, đo đó tổng A[i] + A[j] <  A[k] + A[j] với i < k < j. Tức với mọi k nằm trong khoảng từ i đến j ta luôn có tổng A[i] + A[j] nhỏ hơn tổng A[k] + A[j]. (do A[i] < A[k])
+			Nhận xét 3: Dựa vào nhận xét 1 và 2:
+				Nếu A[i] + A[j] < 0 thì A[i] + A[j -1] sẽ âm hơn A[i] + A[j] (tiến ra xa 0 hơn)
+				Nếu A[i] + A[j] > 0 thì A[i +1] + A[j] sẽ dương hơn A[i] + A[j] (tiến ra xa 0 hơn)
+			Do ta đang cần tìm tổng hai số gần không hơn, nên ta sẽ không tìm cách đi ra xa số 0. Do vậy nếu A[i] + A[j] < 0, ta tiến hành xét cặp A[i+1] + A[j], ngược lại A[i] + A[j] > 0, ta tiến hành xét cặp A[i] + A[j-1]
+
+			Như vậy thuật toán tham lam của ta sẽ là:
+				Sẽ có chỉ số i đi từ trái sang (từ 0 đến N-1), và chỉ số j đi từ phải về (từ N-1 về 0).
+				Nếu tổng A[i] + A[j] < 0 → Ta xét cặp A[i+1] và A[j].
+				Nếu tổng A[i] + A[j] > 0 → Ta xét cặp A[i] và A[j-1].
+				Nếu tổng A[i] + A[j] = 0 → Ta dừng và in ra kết quả.
+				Nếu i >= j → dừng lại (vì tất cả các cặp tốt nhất đã được xét).
+
+44. 44thProblem - Helping the needy - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/12
+		Bước 1 - Đọc kỹ đề bài, chú ý N luôn bằng 0 khi gửi được đủ hàng
+		Bước 2 - Vét cạn - Thử từng giá trị của từng loại và tim phương án có tổng số hộp là lớn nhất. Dừng vét cạn khi value > N hoặc step = 10 => O(N^10)
+		Bước 3 - Cải thiện vét cạn - Ta có nhận xét rằng nếu ta tại mỗi cấu hình ta chọn số lượng hộp từ cao đến thấp. Thì tại vị trí kết quả đúng là N thì cũng là kết quả tốt nhất.
+		Bước 4 - Sử dụng tham lam
+			Nhận xét 1: Muốn số hộp là nhiều nhất thì sử dụng các hộp nhỏ để đựng trước → Ta xét việc đóng gói các hộp từ loại hộp nhỏ trước.
+			Nhận xét 2: Do dữ liệu đảm bảo luôn có cách đóng N hàng hóa → Khi số lượng hàng hóa không đủ cho đóng một loại hộp nào đó → Ta bù số lượng hàng hóa từ các hộp đằng trước đã đóng gói xong.
+				Với mỗi loại hộp i ta thử đóng gói C[i] lần → độ phức tạp O(C[i] * số loại hộp) = O(20*10) = O(200)
+				Với mỗi loại hộp i ta có thể tìm bù từ các hộp phía trước → Độ phức tạp O(C[i] * số loại hộp) = O(20*10) = O(200)
+
+45. 45thProblem - Factory operation - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/13
+		Bước 1 - Đọc kỹ đề bài, chú ý kiểu dữ liệu có thể là số lớn
+		Bước 2 - Vét cạn - Xem ngày hôm đó nên mua hay mua từ 1 ngày nào trước đó và chi phí lưu kho trong những ngày đó + chi phí mua vẫn nhỏ hơn chi phí mua hiện tại -> O(N ^ 2)
+		Bước 3 - Tham lam - Nếu biết giá của ngày hôm trước tốt nhất là giá nào, thì giá của ngày hôm nay tốt nhất là min của (giá ngày hôm nay, giá ngày hôm trước + chi phí lưu kho)
+
+46. 46thProblem - Service Center Task Simulation - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/14
+		Bước 1 - Đọc kỹ đề bài, chú ý khách hàng nào đến trước thì phục vụ trước. Nếu kỹ sư nào bận thì để kỹ sư khác phục vụ. Nếu tất cả các kỹ sư đều bận thì khách hàng tiếp theo phải đợi cho đến khi kỹ sư khác rảnh.
+		Bước 2 - Vét cạn - Tính khoảng thời gian phục vụ của từng kỹ sư. Tìm kỹ sư có thời gian phục vụ lớn nhất. -> O(Q*N*T)
+
+47. 47thProblem - Development of Self-driving Algorithm - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/15
+		Bước 1 - Đọc kỹ đề bài, nhận thấy đây là bài tìm đường đi ngắn nhất
+		Bước 2 - Vét cạn - Tại mỗi bước, ta sẽ thử các đường đi bên cạnhs mà chưa đi đến. Nếu đến đích ta  ghi nhận kết quả và giữ lại kết quả tốt nhất
+		-> ại mỗi bước ta có 4 lựa chọn, ta có tối đa H*W bước là 500*500 = 250,000 bước → độ phức tạp tính toán O(4^250,000) → Không khả thi
+		Bước 3 - Dùng BFS hoặc Dijisktra -> priority_queue
+
+48. 48thProblem - To Assign Project to a New Developer - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/16
+		Bước 1 - Đọc kỹ đề bài, nhận thấy có thể sắp xếp được dãy
+		Bước 2 - Vét cạn - Với mỗi một dự án, Gram Park có hai lựa chọn là tham gia hoặc không tham gia. Sau đó ta kiểm tra cấu hình có hợp lệ hay không (không có sự overlap thì là hợp lệ) và tính số dự án của cấu hình đó và ghi nhận kết quả tốt nhất. -> O(2^N)
+		Bước 3 - Sử dụng tham lam O(NlogN)
+			Nhận xét 1:Nếu project A bao project B thì chọn project B hợp lý hơn:
+			Nhận xét 2: Nếu project A đè lên project B nhưng kết thúc sớm hơn, thì việc chọn project A sẽ tạo tốt hơn do có thêm thời gian cho các project đằng sau:
+			Nhận xét 3: Từ nhận xét 1+2, ta thấy rằng dự án nào có thời gian kết thúc sớm hơn là lựa chọn tốt hơn (có thêm thời gian cho các project đằng sau)
+			Do đó, việc áp dụng tham làm bằng cách sắp xếp các project theo thứ tự tăng dần thời gian kết thúc. Duyệt từ đầu danh sách đã được sắp xếp, nếu project nào có thể assign thì assign cho Gram Park.
+
+
+49. 49thProblem - Path Sum II (medium) - https://leetcode.com/problems/path-sum-ii/
+		Tạo 1 cấu trúc dữ liệu là DFSNode chứa giá trị là node hiện tại, tổng đến node hiện tại, đường dẫn đến node hiện tại
+		Dùng stack để dùng DFS. Thêm root vào stack
+		Lấy phần tử trên cùng của stack
+			Kiểm tra node đó là lá hay không? Kiểm tra giá trị của DFSNode lá đó thỏa mãn hay không?
+			Nếu không phải là lá -> Kiểm tra node trái và phải -> Update DFSNode của node đó và thêm vào stack
+		Lặp đến khi stack rỗng
+
+50. 50thProblem - Number of Provinces (medium) - https://leetcode.com/problems/number-of-provinces/
+		Đổi ma trận kề thành danh sách kề
+		Tạo 1 mảng chứa từng đỉnh đã thăm hay chưa
+		Nếu đỉnh chưa thăm -> đánh dấu đã thăm -> Tìm các đỉnh còn lại kề với đỉnh đang xét và chưa thăm -> DFS đệ quy
+
+51. 51thProblem - Maximum Depth of Binary Tree (easy) - https://leetcode.com/problems/maximum-depth-of-binary-tree/
+		Tương tự bài 49. DFSNode bao gồm node hiện tại và độ sâu đến node đó (số node từ gốc đến node đó). Kiểm tra max của từng node lá
+
+52. 52thProblem - Count Good Nodes in Binary Tree (easy) - https://leetcode.com/problems/count-good-nodes-in-binary-tree/
+		Tương tự bài 49. DFSNode bao gồm node hiện tại và giá trị lớn nhất tính đến node đó (tại từng bước lưu giá trị max của node trước và node hiện tại)
+
+53. 53thProblem - Course Schedule (medium) - https://leetcode.com/problems/course-schedule/
+		Bài toán kiểm tra trong đồ thị tồn tại 1 chu trình nào hay không
+		Biến đổi từ ma trận kề thành danh sách kề. Chú ý khóa first hoàn thành cần hoàn thành khóa second -> chỉ sinh danh sách kề cho khóa second.
+		Tạo 1 mảng thăm với kích thước bằng số khóa học và giá trị mặc định là chưa thăm
+		Duyệt từng khóa học, kiểm tra nó có tạo chu trình hay không bằng DFS.
+			Nếu khóa học đã được thăm -> có chu trình
+			Đánh dấu khóa học đã thăm
+			Tìm các khóa học kề của khóa này -> DFS có chu trình -> có chu trình
+			Bỏ đánh dấu khóa học đã thăm
+			Xóa danh sách kề của khóa học này
+
+54. 54thProblem - DIGOKEYS - Find the Treasure (medium) - https://www.spoj.com/problems/DIGOKEYS/
+		Bài toán sử dụng BFS kết hợp với sắp xếp đỉnh kề của 1 đỉnh trong đồ thị. Lưu ý đồ thị có chiều nên chỉ add 1 đỉnh trỏ đến đỉnh khác.
+
+55. 55thProblem - Monk and the Magical Candy Bags (medium) - https://www.hackerearth.com/practice/data-structures/trees/heapspriority-queues/practice-problems/algorithm/monk-and-the-magical-candy-bags/
+		Chọn hộp nhiều kẹo ăn trước -> Sử dụng MaxHeap với K phần tử -> Time complexity: O(K*log(N))
+
+56. 56thProblem - CLEANRBT - Cleaning Robot (medium) - https://www.spoj.com/problems/CLEANRBT/
+		- Ta đi tìm đường đi ngắn nhất từ điểm xuất phát của robot đi qua tất cả các điểm bẩn.
+		- Gọi C(i,k) là số bước robot cần để di chuyển từ vị trí điểm bẩn thứ i đến điểm bẩn thứ k; P(i) là số bước nhỏ nhất robot cần để di chuyển từ vị trí ban đầu đi qua i điểm bẩn.
+		- Với 10 điểm bẩn, có 10! ~ 4*1e6 cách chọn P(10). Ta cần tìm giá trị nhỏ nhất của các cách chọn này.
+		- Số bước để robot làm sạch i điểm bẩn = Số bước để làm sạch i – 1 điểm bẩn + số bước để đi từ điểm bẩn i-1 đến điểm bẩn i.
+		- min(P(i)) = min(P(i-1)+C(i,i-1)).
+		- Ta có thể sử dụng bfs để giải quyết bài toán này.
+
+57. 57thProblem - Two City Scheduling (medium) - https://leetcode.com/problems/two-city-scheduling/
+		- Brute-force: Mỗi người có thể đến thành phố A hoặc B, trong phương pháp brute-force tạo ra các khả năng chia người sao cho số người đến 2 thánh phố là bằng nhau, cuối cùng chọn ra cấu hình cho chi phí thấp nhất. -> O(2^N)
+		- Greedy: Để ý thấy ta có thể sắp xếp chuỗi N tăng dần theo giá trị X[0] – X[1], trong đó X[0] là chi phí để người X đến thành phố A và X[1] là chi phí để người X đến thành phố B. Sau đó một nửa số người đầu dãy sẽ sắp xếp cho đến thành phố A, nửa còn lại đến thành phố B. -> MinHeap -> O(NlogN)
+
+58. 58thProblem - Remove Covered Intervals (easy) - https://leetcode.com/problems/remove-covered-intervals/
+		- Brute-force: so sánh từng khoảng với tất cả các khoảng còn lại, kiểm tra xem khoảng đó có bị bao bởi khoảng khác hay không. -> O(N^2)
+		- Greedy: Để kiểm tra xem một khoảng có bị bao bởi khoảng khác hay không, ta có thể sắp xếp mảng ban đầu theo phần tử bắt đầu của khoảng đó tăng dần, sau đó ta chỉ cần so sánh phần tử cuối của khoảng đó để biết khoảng đó có bị bao hay không.
+			+ Nếu bắt đầu bằng nhau thì lấy mảng có kết thúc lớn hơn
+			+ Sử dụng 1 biến max đại diện cho phần tử kết thúc, nếu phần tử kết thúc lớn hơn max => khoảng thỏa mãn => tăng đếm lên 1 và cập nhật max bằng phần tử kết thúc
+
+59. 59thProblem - Assign Cookies (easy) - https://leetcode.com/problems/assign-cookies/
+		Sắp xếp cả 2 mảng theo thứ tự tăng dần.
+		Duyệt đồng thời cả 2 mảng, ứng với mỗi đứa trẻ, tìm bánh nhỏ nhất mà có thể làm cho đứa trẻ vui. Nếu tìm được tăng biến đếm lên.
+		Dừng duyệt nếu ko còn đứa trẻ nào cần chia bánh (duyệt đến cuối mảng 1) hoặc chiếc bánh to nhất (duyệt đến cuối mảng 2) cũng không thỏa mãn làm đứa trẻ hiện tại vui.
+
+60. 60thProblem - Jump Game (medium) - https://leetcode.com/problems/jump-game/
+		Define a value max which is the furthest index that all elements from 0 to max can jump to. Set max to 0 initially.
+		For each nums[i], find the furthest element you can jump to which is i + nums[i]. If it is greater than max, then set it as max.
+		Repeat until i == max or i == N-1
+
+61. 61thProblem - Jump Game II (medium) - https://leetcode.com/problems/jump-game-ii/
+		Chỉ cần xác định vị trí xa nhất có thể nhảy được. Tại mỗi lần nhảy chỉ cần update lại giá trị này thay vì phải duyệt tất cả các vị trí có thể nhảy được.
+		Ta chỉ cần update những vị trí chưa được nhảy tới. Như vậy đảm bảo được tập các vị trí của lần nhảy thứ ith phải cần tối thiểu i lần nhảy.
+
+62. 62thProblem - House Robber (Medium) - https://leetcode.com/problems/house-robber/
+		Khi duyệt đến 1 phần tử trong mảng, ta chỉ có 2 lựa chọn là lấy hoặc không lấy. Nếu lấy thì giá trị lấy được là A[i] = A[i] + A[i-2], nếu không lấy giá trị thu được là A[i] = A[i-1]. Từ đây ta có công thức: dp[i] = max(A[i] + dp[i-2], dp[i-1]).
+		Execution time: O(N)
+
+63. 63thProblem - Interleaving String (Medium) - https://leetcode.com/problems/interleaving-string/
+		DP table represents if s3 is interleaving at (i+j)th position when s1 is at ith position, and s2 is at jth position. 0th position means empty string.
+
+		So if both s1 and s2 is currently empty, s3 is empty too, and it is considered interleaving. If only s1 is empty, then if previous s2 position is interleaving and current s2 position char is equal to s3 current position char, it is considered interleaving. similar idea applies to when s2 is empty. when both s1 and s2 is not empty, then if we arrive i, j from i-1, j, then if i-1,j is already interleaving and i and current s3 position equal, it s interleaving. If we arrive i,j from i, j-1, then if i, j-1 is already interleaving and j and current s3 position equal. it is interleaving.
+
+		Execution time: O(s1.length() * s2.length())
+
+64. 64thProblem - Add One (Medium) - https://codeforces.com/problemset/problem/1513/C
+		brute-force: Lưu các chữ số của n vào 1 vector, sau mỗi thao tác tạo ra 1 số mới và cập nhật các chữ số này vào vector
+			Execution time: O(2^(M/9))
+		dp: đặt dp[i] là số chữ số sau khi áp dụng i thao tác lên 10 ta có
+			- dp[i] = 2 ( i thuộc [0,8] )
+			- dp[i] = 3 ( i thuộc [9,9] )
+			- dp[i] = dp[i-9] + dp[i-10] ( i > 9 )
+		ta tính và lưu mảng dp[i] với i thuộc [0,2*10^5]
+		với số n bất kỳ, phân tích ra các chữ số khác nhau và với mỗi chữ số ta biến đổi chữ số d này thành 10 sau (10 - d) thao tác.
+
+65. 65thProblem - [Code understanding] Settlement for Sponsorship - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/1
+		Bài toán tìm dãy con liên tiếp có tổng lớn nhất
+		Dưới đây là cách cài đặt thuật toán với độ phức tạp là O(n3). Với i là phần tử đầu tiên của dãy con, j là phần tử cuối cùng của dãy con, k được lặp để tính tổng của dãy con [i, j] và so sánh với best để lấy giá trị lớn nhất.
+
+66. 66thProblem - [Code understanding] Virus Test - https://codepro.lge.com/exam/19/overseas-questions-for-previous-test/quiz/2
+		Bài toán tìm mảng con trong 1 mảng thành viên với điều kiện mảng con có thể đảo vị trí và tăng giảm thêm 1 vài đơn vị
+		Brute-force: Sắp xếp mảng B và dùng std::next_permutation (xét tất cả các khả năng có thể có của B) và search trên toàn bộ A
+		Tham lam: Sắp xếp mảng B, trích M phần tử của mảng A, sắp xếp mảng trích và tìm mảng B đã sắp xếp trên mảng trích
+		

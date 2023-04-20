@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+int N; // Number of songs
+int SN; // Information regarding number of pairs of songs of the same genre
+int DN; // Information regarding number of pairs of songs of different genres
+int S1[50 + 10], S2[50 + 10]; // Information regarding number of pairs of songs of the same genre
+int D1[50 + 10], D2[50 + 10]; // Information regarding number of pairs of songs of different genres
+
+int sol = -1; // Correct answer
+
+void InputData(void)
+{
+	int i;
+
+	cin >> N >> SN >> DN;
+	for (i = 0; i < SN; i++) {
+		cin >> S1[i] >> S2[i];
+	}
+	for (i = 0; i < DN; i++) {
+		cin >> D1[i] >> D2[i];
+	}
+}
+
+void OutputData(void)
+{
+	cout << sol;
+}
+
+bool isOK(const vector<char>& v)
+{
+	bool r = true;
+	for (int i = 0; i < SN; ++i) {
+		if (v[S1[i] - 1] != v[S2[i] - 1]) {
+			return false;
+		}
+	}
+	for (int i = 0; i < DN; i++) {
+		if (v[D1[i] - 1] == v[D2[i] - 1]) {
+			return false;
+		}
+	}
+	return r;
+}
+
+void gen(int step, vector<char>& v, int &result)
+{
+	if (step == N) {
+		if (!isOK(v)) {
+			result++;
+		}
+		return;
+	}
+	for (char c = 'A'; c <= 'C'; ++c) {
+		v[step] = c;
+		gen(step + 1, v, result);
+	}
+}
+
+int main(void)
+{
+	InputData(); // Input
+
+	// TODO
+	vector<char> v(N);
+	
+	int result = 0;
+	
+	gen(0, v, result);
+	
+	result = pow(3, N) - result;
+	
+	cout << result << endl;
+	// OutputData(); // Output
+
+	return 0;
+}

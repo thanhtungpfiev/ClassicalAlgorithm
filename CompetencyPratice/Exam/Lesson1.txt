@@ -1,0 +1,101 @@
+#include <iostream>
+#include <climits>
+#include <queue>
+using namespace std;
+
+int H, W;//Height and width of the map
+int map[100 + 10][100 + 10];//Map information
+int visited[100 + 10][100 + 10];//[height][width]
+bool visitedNew[100 + 10][100 + 10];
+
+struct Point
+{
+	int x;
+	int y;
+	Point(int x1, int y1) {
+		x = x1;
+		y = y1;
+	}
+};
+
+void InputData(){
+	cin >> H >> W;
+	for (int i=0; i<H; i++){
+		for (int j=0; j<W; j++){
+				cin >> map[i][j];
+		}
+	}
+}
+
+int di[] = { -1,1,0,0 };
+int dj[] = { 0,0,-1,1 };
+void Flood(int i, int j) {
+	int ni, nj;
+	if (visited[i][j] == 1)	return;
+	visited[i][j] = 1;
+
+	for (int k = 0; k < 4; k++) {
+		ni = i + di[k], nj = j + dj[k];
+		if (ni < 0 || ni >= H || nj < 0 || nj >= W) continue;
+		if (map[i][j] != map[ni][nj]) continue;
+		Flood(ni, nj);
+	}
+}
+
+int Area(void) {
+	int cnt = 0;
+	for (int i = 0; i < H; i++) {
+		for (int j = 0; j < W; j++) {
+			if (visited[i][j] == 0) {
+				Flood(i, j);
+				cnt++;
+			}
+		}
+	}
+	return cnt;
+}
+
+void bfs(int x, int y)
+{
+	Point startPoint(x, y);
+	visitedNew[x][y] = true;
+	queue<Point> q;
+	q.push(startPoint);
+	while (!q.empty()) {
+		Point u = q.front();
+		q.pop();
+		for (int i = 0; i < 4; ++i) {
+			int newX = u.x + di[i];
+			int newY = u.y + dj[i];
+			if (newX < 0 || newX > H - 1) continue;
+			if (newY < 0 || newY > W - 1) continue;
+			if (visitedNew[newX][newY] == false && abs(map[newX][newY] - map[u.x][u.y]) <= 1) {
+				visitedNew[newX][newY] = true;
+				q.push(Point(newX, newY));
+			}
+		}
+	}}
+
+int Solve(void) {
+
+	//  TODO
+	int result = 0;
+	for (int i  = 0; i < H; ++i) {
+		for (int j = 0; j < W; ++j) {
+			if (visitedNew[i][j] == false) {
+				bfs(i, j);
+				result++;
+			}
+		}
+	}
+	return result;
+}
+
+int main(){
+	int ans = 0;
+	InputData();//Input
+	// cout << Area() << endl;
+	ans = Area() - Solve();
+	cout << ans << endl;//Output
+	return 0;
+}
