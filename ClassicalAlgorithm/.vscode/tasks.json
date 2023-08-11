@@ -3,7 +3,7 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file",
-            "command": "C:\\Qt\\Qt5.12.11\\Tools\\mingw730_64\\bin\\g++.exe",
+            "command": "C:\\Qt\\Qt5.12.12\\Tools\\mingw730_64\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",

@@ -5,7 +5,7 @@
       "includePath": [
         "${workspaceFolder}/**"
       ],
-      "compilerPath": "C:/Qt/Qt5.12.11/Tools/mingw730_64/bin/gcc.exe",
+      "compilerPath": "C:/Qt/Qt5.12.12/Tools/mingw730_64/bin/gcc.exe",
       "cStandard": "c11",
       "cppStandard": "c++14",
       "intelliSenseMode": "windows-gcc-x64",
