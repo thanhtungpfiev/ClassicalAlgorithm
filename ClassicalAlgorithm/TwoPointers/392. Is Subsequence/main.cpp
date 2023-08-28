@@ -76,6 +76,30 @@ public:
     }
 };
 
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        if (s.length() > t.length()) {
+            return false;
+        }
+        int start = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            bool isFound = false;
+            for (int j = start; j < t.length(); ++j) {
+                if (t[j] == s[i]) {
+                    isFound = true;
+                    start = j + 1;
+                    break;
+                }
+            }
+            if (isFound == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
 int main(int argc, char **argv)
 {
     Solution sl;
