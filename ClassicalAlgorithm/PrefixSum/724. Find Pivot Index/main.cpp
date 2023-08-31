@@ -34,6 +34,25 @@ public:
     }
 };
 
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        int index = -1;
+        int sum = 0, leftsum = 0;
+        for (auto e : nums) {
+            sum += e;
+        }
+        for (int i = 0; i < nums.size(); ++i) {
+            if (leftsum == sum - leftsum - nums[i]) {
+                index = i;
+                break;
+            }
+            leftsum += nums[i];
+        }
+        return index;
+    }
+};
+
 int main(int argc, char **argv)
 {
     Solution sl;
